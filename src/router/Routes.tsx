@@ -7,14 +7,14 @@ import ErrorBoundary from "../components/ErrorBoundary";
 
 const AppRoutes: React.FC = () => {
   return (
+    <ErrorBoundary>
     <Router>
-      <ErrorBoundary>
       <Routes>
         <Route path="/" element={<Posts />} />
         <Route path="/post/:id" element={<Post />} />
       </Routes>
-      </ErrorBoundary>
     </Router>
+    </ErrorBoundary>
   );
 };
 

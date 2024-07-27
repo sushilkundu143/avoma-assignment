@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.search-input {
+  margin-bottom: 16px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
