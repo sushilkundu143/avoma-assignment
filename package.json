@@ -17,6 +17,7 @@
     "tsc": "tsc --noEmit",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "deploy": "gh-pages -d dist",
     "lighthouse": "lighthouse http://localhost:3000 --config-path=lighthouseConfig/lighthouse-desktop-config.cjs --output html --output-path ./reports/report.html"
   },
   "dependencies": {
