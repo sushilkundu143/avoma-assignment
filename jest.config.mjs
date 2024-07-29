@@ -20,6 +20,9 @@ export default {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',  // Use ts-jest for TypeScript files
   },
+  moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+  },
   transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   coverageDirectory: "coverage",
   coverageReporters: [
