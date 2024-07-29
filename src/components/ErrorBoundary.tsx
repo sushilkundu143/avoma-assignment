@@ -23,7 +23,7 @@ class ErrorBoundary extends React.PureComponent<ErrorBoundaryProps, ErrorBoundar
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({ error, errorInfo });
   }
-
+  
   render() {
     if (this.state.hasError) {
       return (
@@ -34,8 +34,6 @@ class ErrorBoundary extends React.PureComponent<ErrorBoundaryProps, ErrorBoundar
               <summary className="text-lg font-semibold mb-2 cursor-pointer">Error Details</summary>
               <div className="text-sm text-gray-700">
                 {this.state.error && this.state.error.toString()}
-                <br />
-                {this.state.errorInfo?.componentStack}
               </div>
             </details>
           </div>

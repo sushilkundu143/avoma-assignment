@@ -16,6 +16,7 @@ const Posts: React.FC = () => {
     queryFn: fetchPosts,
     staleTime: Infinity,
     gcTime: Infinity,
+    retry: false
   });
 
   // Debounce search term updates
@@ -33,7 +34,7 @@ const Posts: React.FC = () => {
   const filteredPosts = data?.filter(post =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
+  
   // Render loading state
   if (isLoading) return <LoadingIcon />;
 
@@ -41,7 +42,7 @@ const Posts: React.FC = () => {
   if (error) return <ErrorComponent message={error.message} />;
 
   // Render empty state if no data is available
-  if (!data) return <ErrorComponent message="No posts available" />;
+  if (!data || data.length === 0) return <ErrorComponent message="No posts available" />;
 
   return (
     <div className="md:p-4 p-0" data-testid="posts">
