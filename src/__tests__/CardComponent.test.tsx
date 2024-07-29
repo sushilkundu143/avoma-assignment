@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import CardComponent from '../components/CardComponent';
+import "@testing-library/jest-dom"; 
 
 describe('CardComponent', () => {
   test('renders card with title and body', () => {
@@ -27,7 +28,6 @@ describe('CardComponent', () => {
         clickable={false}
       />
     );
-
     expect(screen.getByText('Non-clickable Card Title')).toBeInTheDocument();
     expect(screen.getByText('Non-clickable Card Body')).toBeInTheDocument();
   });

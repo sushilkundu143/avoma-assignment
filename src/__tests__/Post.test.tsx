@@ -43,7 +43,7 @@ describe('Post Component', () => {
   });
 
   test('renders error state if fetching post fails', async () => {
-    (fetchPost as jest.Mock).mockRejectedValue(new Error('Failed to fetch post'));
+    (fetchPost as jest.Mock).mockRejectedValue({message: 'Failed to fetch post'});
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -55,8 +55,12 @@ describe('Post Component', () => {
       </QueryClientProvider>
     );
 
-    await waitFor(() => {
+     // Wait for the loading state to transition
+     await waitFor(() => {
       expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
       expect(screen.getByTestId('errorComponent')).toBeInTheDocument();
       expect(screen.getByText('Failed to fetch post')).toBeInTheDocument();
     });
@@ -91,7 +95,7 @@ describe('Post Component', () => {
 
   test('renders error state if fetching comments fails', async () => {
     (fetchPost as jest.Mock).mockResolvedValue(mockPost);
-    (fetchComments as jest.Mock).mockRejectedValue(new Error('Failed to fetch comments'));
+    (fetchComments as jest.Mock).mockRejectedValue({message: 'Failed to fetch comments'});
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -102,6 +106,10 @@ describe('Post Component', () => {
         </MemoryRouter>
       </QueryClientProvider>
     );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
+    });
 
     await waitFor(() => {
       expect(screen.getByText(mockPost.title)).toBeInTheDocument();

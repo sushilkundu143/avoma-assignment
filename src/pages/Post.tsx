@@ -4,9 +4,9 @@ import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import CardComponent from "../components/CardComponent";
 import LoadingIcon from "../components/LoadingIcon";
-import ErrorComponent from '../components/ErrorComponent';
-import { fetchPost, fetchComments } from '../utils/util';
-import { Post as PostType, Comment as CommentType } from '../types/types';
+import ErrorComponent from "../components/ErrorComponent";
+import { fetchPost, fetchComments } from "../utils/util";
+import { Post as PostType, Comment as CommentType } from "../types/types";
 
 const Post: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,6 +20,7 @@ const Post: React.FC = () => {
     queryFn: () => fetchPost(id!),
     staleTime: Infinity,
     gcTime: Infinity,
+    retry: false,
   });
 
   const {
@@ -31,14 +32,15 @@ const Post: React.FC = () => {
     queryFn: () => fetchComments(id!),
     staleTime: Infinity,
     gcTime: Infinity,
-    enabled: !!post
+    enabled: !!post,
+    retry: false,
   });
 
   if (postLoading) return <LoadingIcon />;
-  if (postError || !post) return <ErrorComponent message={postError?.message ?? 'No posts available'} />;
-
-  if (commentsLoading) return <LoadingIcon />;
-  if (commentsError || !comments) return <ErrorComponent message={commentsError?.message ?? 'No comments available'} />;
+  if (postError || !post)
+    return (
+      <ErrorComponent message={postError?.message ?? "No posts available"} />
+    );
 
   return (
     <div className="md:p-4 p-0">
@@ -49,16 +51,23 @@ const Post: React.FC = () => {
       <p className="mt-2">{post?.body}</p>
 
       <h2 className="text-xl font-bold mt-4">Comments</h2>
-      <div className="mt-2">
-        {comments?.map((comment: CommentType) => (
-          <CardComponent
-            key={comment.id}
-            title={comment.name}
-            body={comment.body}
-            id={comment.id}
-            clickable={false}
+      <div className="mt-2 grid gap-4">
+        {(commentsError || !comments && !commentsLoading) ? (
+          <ErrorComponent
+            message={commentsError?.message ?? "No comments available"}
           />
-        ))}
+        ) : (
+          comments?.map((comment: CommentType) => (
+            <CardComponent
+              key={comment.id}
+              title={comment.name}
+              body={comment.body}
+              id={comment.id}
+              clickable={false}
+            />
+          ))
+        )}
+        {commentsLoading && <LoadingIcon />}
       </div>
     </div>
   );
