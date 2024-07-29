@@ -30,7 +30,7 @@ describe('fetchData', () => {
     });
 
     await expect(fetchData<PostType>('https://jsonplaceholder.typicode.com/posts/1')).rejects.toThrow(
-      'Network response was not ok'
+      'Failed to fetch data from the server. Please try again later.'
     );
   });
 });

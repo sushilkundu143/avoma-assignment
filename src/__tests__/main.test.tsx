@@ -1,10 +1,11 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen } from '@testing-library/react';
+// import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from '../App';
-import ReactDOM from 'react-dom/client';
+import * as ReactDOM from 'react-dom/client';
 
+// Mock ReactDOM.createRoot
 jest.mock('react-dom/client', () => ({
   createRoot: jest.fn().mockImplementation(() => ({
     render: jest.fn(),
@@ -13,25 +14,25 @@ jest.mock('react-dom/client', () => ({
 
 test('renders App with QueryClientProvider', () => {
   const queryClient = new QueryClient();
-  const root = document.createElement('div');
-  root.id = 'root';
-  document.body.appendChild(root);
+  const rootElement = document.createElement('div');
+  rootElement.id = 'root';
+  document.body.appendChild(rootElement);
+
+  // Import main.tsx after setting up the DOM
+  require('../main');
 
   const createRoot = ReactDOM.createRoot as jest.Mock;
-  render(
+  expect(createRoot).toHaveBeenCalledWith(rootElement);
+
+  const root = createRoot.mock.results[0].value;
+  expect(root.render).toHaveBeenCalledWith(
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
-    </React.StrictMode>,
-    {
-      container: root,
-    }
+    </React.StrictMode>
   );
 
-  // Check if the App component's content is rendered
-  expect(createRoot).toHaveBeenCalledWith(root);
-//   expect(screen.getByText(/Posts/i)).toBeInTheDocument();
-
-  document.body.removeChild(root);
+  // Clean up
+  document.body.removeChild(rootElement);
 });
