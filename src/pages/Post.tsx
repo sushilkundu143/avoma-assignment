@@ -17,7 +17,7 @@ const Post: React.FC = () => {
     isLoading: postLoading,
   } = useQuery<PostType, Error>({
     queryKey: ["post", id],
-    queryFn: () => fetchPost(id!),
+    queryFn: () => fetchPost(id!) ?? [],
     staleTime: Infinity,
     gcTime: Infinity,
     retry: false,
@@ -37,7 +37,7 @@ const Post: React.FC = () => {
   });
 
   if (postLoading) return <LoadingIcon />;
-  if (postError || !post)
+  if (postError || !post || post === undefined)
     return (
       <ErrorComponent message={postError?.message ?? "No posts available"} />
     );
