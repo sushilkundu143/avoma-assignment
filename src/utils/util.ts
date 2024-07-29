@@ -3,7 +3,7 @@ import { Post as PostType, Comment as CommentType } from '../types/types';
 export const fetchData = async <T>(url: string): Promise<T> => {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('Failed to fetch data from the server. Please try again later.');
     }
     return response.json();
   };

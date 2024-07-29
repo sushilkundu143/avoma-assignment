@@ -5,10 +5,10 @@ interface ErrorComponentProps {
   message: string;
 }
 
-const ErrorComponent: React.FC<ErrorComponentProps> = ({ title, message }) => {
+const ErrorComponent: React.FC<ErrorComponentProps> = ({ title = 'Error', message }) => {
   return (
     <div className="p-4 bg-red-100 text-red-700 border border-red-300 rounded-md" data-testid="errorComponent">
-      <h2 className="text-xl font-semibold">{title || 'Error'}</h2>
+      <h2 className="text-xl font-semibold">{title}</h2>
       <p>{message}</p>
     </div>
   );

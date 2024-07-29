@@ -9,6 +9,8 @@ import { fetchPosts } from '../utils/util';
 
 const Posts: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Fetch posts using react-query
   const { data, error, isLoading } = useQuery<Post[], Error>({
     queryKey: ['posts'],
     queryFn: fetchPosts,
@@ -16,26 +18,33 @@ const Posts: React.FC = () => {
     gcTime: Infinity,
   });
 
+  // Debounce search term updates
   const debouncedSearch = useMemo(
     () => debounce((term: string) => setSearchTerm(term), 300),
     []
   );
 
+  // Handle search input changes
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     debouncedSearch(e.target.value);
   };
 
+  // Filter posts based on search term
   const filteredPosts = data?.filter(post =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Render loading state
   if (isLoading) return <LoadingIcon />;
+
+  // Render error state
   if (error) return <ErrorComponent message={error.message} />;
 
+  // Render empty state if no data is available
   if (!data) return <ErrorComponent message="No posts available" />;
-  
+
   return (
-    <div className="p-4" data-testid="posts">
+    <div className="md:p-4 p-0" data-testid="posts">
       <h1 className="text-2xl font-bold mb-4">Posts</h1>
       <input
         type="text"
