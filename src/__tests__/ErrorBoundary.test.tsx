@@ -14,7 +14,6 @@ describe('ErrorBoundary', () => {
         <ProblemChild />
       </ErrorBoundary>
     );
-    screen.debug();
     expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
     expect(screen.getByText(/Error Details/)).toBeInTheDocument();
     expect(screen.getByText(/Error: Test error/)).toBeInTheDocument();

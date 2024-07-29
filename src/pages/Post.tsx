@@ -52,7 +52,7 @@ const Post: React.FC = () => {
 
       <h2 className="text-xl font-bold mt-4">Comments</h2>
       <div className="mt-2 grid gap-4">
-        {(commentsError || !comments && !commentsLoading) ? (
+        {commentsError || (!comments && !commentsLoading) ? (
           <ErrorComponent
             message={commentsError?.message ?? "No comments available"}
           />

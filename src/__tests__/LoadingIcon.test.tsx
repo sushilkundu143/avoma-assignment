@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LoadingIcon from '../components/LoadingIcon';
+import '@testing-library/jest-dom';
 
 describe('LoadingIcon Component', () => {
   test('renders loading spinner with correct styles', () => {
