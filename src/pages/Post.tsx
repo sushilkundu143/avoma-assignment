@@ -31,6 +31,7 @@ const Post: React.FC = () => {
     queryFn: () => fetchComments(id!),
     staleTime: Infinity,
     gcTime: Infinity,
+    enabled: !!post
   });
 
   if (postLoading) return <LoadingIcon />;
@@ -38,9 +39,9 @@ const Post: React.FC = () => {
 
   if (commentsLoading) return <LoadingIcon />;
   if (commentsError || !comments) return <ErrorComponent message={commentsError?.message ?? 'No comments available'} />;
-  
+
   return (
-    <div className="p-4">
+    <div className="md:p-4 p-0">
       <Link to="/" className="text-blue-900 underline">
         Back to Posts
       </Link>
