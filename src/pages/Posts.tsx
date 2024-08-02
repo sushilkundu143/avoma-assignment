@@ -13,7 +13,7 @@ const Posts: React.FC = () => {
   // Fetch posts using react-query
   const { data, error, isLoading } = useQuery<Post[], Error>({
     queryKey: ['posts'],
-    queryFn: fetchPosts,
+    queryFn: () => fetchPosts() ?? [],
     staleTime: Infinity,
     gcTime: Infinity,
     retry: false
