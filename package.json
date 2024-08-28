@@ -20,7 +20,8 @@
     "deploy": "gh-pages -d dist",
     "lighthouse": "lighthouse http://localhost:4174 --config-path=lighthouseConfig/lighthouse-desktop-config.cjs --output html --output-path ./reports/report.html",
     "prepare": "husky",
-    "prepush": "npm run test:coverage"
+    "prepush": "npm run test:coverage",
+    "netlify": "netlify deploy --prod"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.11",
@@ -31,8 +32,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
-    "tailwindcss": "^3.4.7",
-    "vite-plugin-compression": "^0.5.1"
+    "tailwindcss": "^3.4.7"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.24.8",
@@ -65,7 +65,8 @@
     "ts-jest": "^29.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
-    "vite": "^5.3.4"
+    "vite": "^5.3.4",
+    "vite-plugin-compression": "^0.5.1"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
